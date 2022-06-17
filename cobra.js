@@ -4,7 +4,6 @@
 // Readptado por: Caio Lucena Colaço
 // Código fonte original: http://zetcode.com/javascript/snake/
 
-
 // Declaração de variáveis e constantes
 
 var tela;
@@ -35,25 +34,12 @@ const TECLA_DIREITA = 39;
 const TECLA_ACIMA = 38;
 const TECLA_ABAIXO = 40;
 
-// const music = new Audio("trapMedley.wav")
-// music.play();
-// music.loop =true;
-// music.playbackRate = 1;
-// music.pause();
-
-// const audioContext = new AudioContext();
-// const element = document.querySelector("audio");
-// const source = audioContext.createMediaElementSource(element);
-// source.connect(audioContext.destination)
-// audio.play();
-
 var x = [];
 var y = [];
 
 onkeydown = verificarTecla; // Define função chamada ao se pressionar uma tecla
 
 iniciar(); // Chama função inicial do jogo
-
 
 // Definição das funções
 

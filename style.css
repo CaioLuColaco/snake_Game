@@ -1,11 +1,28 @@
-body { 
-    background-image: url('./selva.jpg');
-    width: 100%;
-    height: 100%;
-    
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
 }
 
-.jogo_completo{
+html,
+body { 
+    height: 100%;
+    /* background-image: url('./selva.jpg'); */
+    color: #6e7888;
+}
+
+body {
+    background-color: #222738;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6e7888;
+}
+canvas {
+    background-color: #181825;
+}
+
+/* .jogo_completo{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -15,19 +32,23 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 10%;
+    margin-top: 3%;
 }
+
 .buttons {
     width: 500px;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    
-    margin-top: 20px
+    justify-content: center;
+    margin: 20px auto;
 }
+
 .buttons button{
     width: 100px;
     height: 50px;
+    margin: 0 auto;
 }
+
 #start{
     margin-right: 40px;
-}
+} */

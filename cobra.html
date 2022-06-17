@@ -13,14 +13,16 @@
         <div class="game">
             <canvas id="tela" width="500" height="500"></canvas>
         </div>
-        <div class="buttons">
-            <button id="start">Começar</button>
-            <button id="Pause">Pause</button>
+        <div id="menu">
+            <h2>Snake</h2>
+            <a id="newgame_menu">Soltar a cobra</a>
         </div>
 
     </div>
 
-<audio id="musica" src="trapMedley.wav" controls autoplay></audio>
+<audio id="musica"controls autoplay loop>
+    <source src="trapMedley.wav" type="audio/wav">
+</audio>
 </body>
 
 <script src="cobra.js"></script>
