@@ -9,6 +9,18 @@
 var tela;
 var ctx;
 
+var gamer = "";
+var champions = localStorage.getItem("gameChamps")
+
+const mordida = new Audio()
+mordida.src = "mordida.wav"
+
+const perdeu = new Audio()
+perdeu.src = "perdeu.wav"
+
+const explosao = new Audio()
+explosao.src = "explosion.wav"
+
 var cabeca;
 var maca;
 var bola;
@@ -26,8 +38,8 @@ var noJogo = true;
 const TAMANHO_PONTO = 10;
 const ALEATORIO_MAXIMO = 29;
 const ATRASO = 140;
-const C_ALTURA = 500;
-const C_LARGURA = 500;    
+const C_ALTURA = 320;
+const C_LARGURA = 320;    
 
 const TECLA_ESQUERDA = 37;
 const TECLA_DIREITA = 39;
@@ -39,13 +51,68 @@ var y = [];
 
 onkeydown = verificarTecla; // Define função chamada ao se pressionar uma tecla
 
-iniciar(); // Chama função inicial do jogo
+var showScreen = function(screen_opt){
+    switch(screen_opt){
+            
+        case 0:  screen_snake.style.display = "block";
+                 screen_menu.style.display = "none";
+                 screen_gameover.style.display = "none";
+                 break;
+            
+        case 1:  screen_snake.style.display = "none";
+                 screen_menu.style.display = "block";
+                 screen_gameover.style.display = "none";
+                 break;
+        
+        case 2: screen_snake.style.display = "none";
+                screen_menu.style.display = "none";
+                screen_gameover.style.display = "block";
+                break;
+    }
+}
+
+window.onload = function(){
+    tela = document.getElementById("tela");
+    ctx = tela.getContext("2d");
+
+    atualizarTabela();
+
+    screen_snake = document.getElementById("tela");
+    screen_menu = document.getElementById("menu");
+    screen_gameover = document.getElementById("gameover");
+
+    button_newgame_menu = document.getElementById("newgame_menu");
+    button_newgame_gameover = document.getElementById("newgame_gameover");
+
+    button_name = document.getElementById("nameBtn")
+    gamer_name = document.getElementById("gamer")
+    gamer_title = document.getElementById("gamerTitle")
+
+    all_score = document.getElementById("score_value");
+
+    button_newgame_menu.onclick = function(){iniciar();};
+    button_newgame_gameover.onclick = function(){reIniciar();}; 
+    button_name.onclick = function(){definirNome();}; 
+}
 
 // Definição das funções
 
+function definirNome(){
+    gamer = gamer_name.value
+    gamer_title.innerHTML = gamer != ""? `Jiboia do(a) ${gamer}` : "Jiboia"
+}
+
+function reIniciar(){
+    paraDireita = true;
+    paraEsquerda = false;
+    paraCima = false;
+    paraBaixo = false;
+    iniciar()
+}
+
 function iniciar() {
-    tela = document.getElementById("tela");
-    ctx = tela.getContext("2d");
+    noJogo = true
+    showScreen(0)
 
 	ctx.fillStyle = "black";
 	ctx.fillRect(0, 0, C_LARGURA, C_ALTURA);
@@ -65,6 +132,31 @@ function carregarImagens() {
     
     maca = new Image();
     maca.src = "maca.png"; 
+}
+
+function atualizarTabela() {
+    for(champ in champions){
+        $("#ranking").append(`
+        <li class="table-row">
+            <div class="col col-1" >${champ.gamer}</div>
+            <div class="col col-2" >${champ.score}</div>
+            <div class="col col-3" >${champ.hour}</div>
+        </li>
+    `)
+    }
+}
+
+function guardarScore(score){
+    // champions.push({gamer: gamer, score: score, hour: new Date()})
+    // for(x = champions.length-1; x>0; x--){
+    //     if(champions[x].score>champions[x-1].score){
+    //         let sub = champions[x-1]
+    //         champions[x-1] = champions[x]
+    //         champions[x] = sub
+    //     }
+    // }
+    // localStorage.setItem("gameChamps", champions)
+    // atualizarTabela()
 }
 
 function criarCobra() {
@@ -94,9 +186,15 @@ function cicloDeJogo() {
     }
 }
 
+function add_score(score) {
+    all_score.innerHTML = String(score)
+}
+
 function verificarMaca() {
     if ((x[0] == maca_x) && (y[0] == maca_y)) {
+        mordida.play()
         pontos++;
+        add_score(pontos)
         localizarMaca();
     }
 }    
@@ -104,24 +202,39 @@ function verificarMaca() {
 function verificarColisao() {
     for (var z = pontos; z > 0; z--) {
         if ((z > 4) && (x[0] == x[z]) && (y[0] == y[z])) {
+            mordida.play()
             noJogo = false;
+            guardarScore(pontos)
+            showScreen(2)
         }
     }
 
     if (y[0] >= C_ALTURA) {
+        explosao.play()
         noJogo = false;
+        guardarScore(pontos)
+        showScreen(2)
     }
 
     if (y[0] < 0) {
+        explosao.play()
        noJogo = false;
+       guardarScore(pontos)
+       showScreen(2)
     }
 
     if (x[0] >= C_LARGURA) {
+        explosao.play()
       noJogo = false;
+      guardarScore(pontos)
+      showScreen(2)
     }
 
     if (x[0] < 0) {
+        mordida.play()
       noJogo = false;
+      guardarScore(pontos)
+      showScreen(2)
     }
 }
 
@@ -163,16 +276,8 @@ function fazerDesenho() {
             }
         }    
     } else {
-        fimDeJogo();
+        showScreen(2)
     }        
-}
-
-function fimDeJogo() {
-    ctx.fillStyle = "white";
-    ctx.textBaseline = "middle"; 
-    ctx.textAlign = "center"; 
-    ctx.font = "normal bold 18px serif";
-    ctx.fillText("Fim de Jogo", C_LARGURA/2, C_ALTURA/2);
 }
 
 function verificarTecla(e) {

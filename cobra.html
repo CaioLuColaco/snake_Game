@@ -9,21 +9,50 @@
 </head>
 
 <body>
-    <div class="jogo-completo">
-        <div class="game">
-            <canvas id="tela" width="500" height="500"></canvas>
-        </div>
-        <div id="menu">
-            <h2>Snake</h2>
-            <a id="newgame_menu">Soltar a cobra</a>
+    <header class="wrap">
+        <h1 id="gamerTitle">Jiboia</h1>
+        <p class="score">Pontos: <span id="score_value">0</span></p>
+    </header>
+    <canvas class="wrap" id="tela" width="320" height="320" tabindex="1"></canvas>
+
+    <!-- Game Over Screen -->
+    <div id="gameover">
+        <h2>Perdeu Mah!</h2>
+        
+        <a id="newgame_gameover">Soltar outra Cobra</a>
+    </div>
+
+    <!-- Main Menu Screen --> 
+    <div id="menu">
+        <h2>Jiboia Game</h2>
+
+        <a id="newgame_menu">Soltar a cobra</a>
+    </div>
+
+    <audio controls autoplay loop>
+        <source src="trapMedley.wav" type="audio/wav">
+    </audio>
+
+    <div class="nameBox">
+        <div class="container__item">
+            <input id="gamer" type="text" class="form__field" placeholder="De quem é essa cobra?" />
+            <a id="nameBtn" type="button" class="btn">É minha!</a>
         </div>
 
     </div>
 
-<audio id="musica"controls autoplay loop>
-    <source src="trapMedley.wav" type="audio/wav">
-</audio>
+    <div class="container">
+        <h2>Campeões da Jiboia <small>Criado em 2022</small></h2>
+        <ul id="ranking" class="responsive-table">
+          <li class="table-header">
+            <div class="col col-1">Nome</div>
+            <div class="col col-2">Pontos</div>
+            <div class="col col-3">Data</div>
+          </li>
+        </ul>
+    </div>
+    
 </body>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="cobra.js"></script>
 </html>
